@@ -13,21 +13,23 @@ input.addEventListener(`input`, debounce(onInput, DEBOUNCE_DELAY))
 function onInput(evt) {
     const nameInput = evt.target.value;
     console.log(nameInput);
+
+    fetchCountries().then(data => createMarkup(data));
     
-    fetchCountries().then(data => {
-        if (data.length === 1) {
-            return createCountryMarkup(data);
-        }
-        if (data.length > 0 && data.length < 10) {
-            return createMarkup(data)
-        }
-        if (data.length = 0) {
-            Notify.failure('Oops, there is no country with that name');
-        }
-        if (data.length > 10) {
-            Notify.info('Too many matches found. Please enter a more specific name.');
-        }
-    } 
+    // fetchCountries().then(data => {
+    //     if (data.length === 1) {
+    //         return createCountryMarkup(data);
+    //     }
+    //     if (data.length > 0 && data.length < 10) {
+    //         return createMarkup(data)
+    //     }
+    //     if (data.length = 0) {
+    //         Notify.failure('Oops, there is no country with that name');
+    //     }
+    //     if (data.length > 10) {
+    //         Notify.info('Too many matches found. Please enter a more specific name.');
+    //     }
+    // } 
 }
 
 
