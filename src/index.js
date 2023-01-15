@@ -14,7 +14,8 @@ function onInput(evt) {
     const nameInput = evt.target.value;
     console.log(nameInput);
 
-    fetchCountries().then(data => createMarkup(data));
+    fetchCountries(nameInput).then(data => list.innerHTML = createMarkup(data))
+        .catch(error => console.log(error));
     
     // fetchCountries().then(data => {
     //     if (data.length === 1) {
@@ -35,7 +36,8 @@ function onInput(evt) {
 
 
 function createMarkup(arr) {
-    const markup = arr.map(({
+    // const markup =
+    return arr.map(({
         name,
         flags,}) => 
         
@@ -43,11 +45,12 @@ function createMarkup(arr) {
         <img src="${flags.svg}" alt="" width = 60/>
         <h2>${name}</h2>
         </li>`).join(``)
-    list.insertAdjacentHTML(`beforeend`, markup)
+    // list.insertAdjacentHTML(`beforeend`, markup)
 }
 
 function createCountryMarkup(el) {
-    const markup = el(({
+    // const markup =
+        return el(({
         name,
         capital,
         population,
@@ -61,6 +64,6 @@ function createCountryMarkup(el) {
         <h3>${population}</h3>
         <h3>${languages[0].name}</h3>
         </li>`).join(``)
-    list.insertAdjacentHTML(`beforeend`, markup)
+    // list.insertAdjacentHTML(`beforeend`, markup)
 }
 
