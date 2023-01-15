@@ -13,44 +13,38 @@ input.addEventListener(`input`, debounce(onInput, DEBOUNCE_DELAY))
 function onInput(evt) {
     const nameInput = evt.target.value;
     console.log(nameInput);
-
-    fetchCountries(nameInput).then(data => list.innerHTML = createMarkup(data))
-        .catch(error => console.log(error));
     
-    // fetchCountries().then(data => {
-    //     if (data.length === 1) {
-    //         return createCountryMarkup(data);
-    //     }
-    //     if (data.length > 0 && data.length < 10) {
-    //         return createMarkup(data)
-    //     }
-    //     if (data.length = 0) {
-    //         Notify.failure('Oops, there is no country with that name');
-    //     }
-    //     if (data.length > 10) {
-    //         Notify.info('Too many matches found. Please enter a more specific name.');
-    //     }
-    // } 
+    fetchCountries(nameInput).then(data => {
+        if (data.length > 10) {
+            return Notify.info('Too many matches found. Please enter a more specific name.');
+        }
+        if (data.length === 1) {
+            return list.innerHTML = createCountryMarkup(data);
+        }
+        if (data.length > 0 || data.length <= 10) {
+            return list.innerHTML = createMarkup(data);
+        }
+        if (data.name = nameInput) {
+            return Notify.failure('Oops, there is no country with that name');
+        }
+    }) 
+        .catch(error => console.log(error));
 }
 
 
 
 function createMarkup(arr) {
-    // const markup =
     return arr.map(({
         name,
         flags,}) => 
         
         `<li>
-        <img src="${flags.svg}" alt="" width = 60/>
-        <h2>${name}</h2>
+            <img src="${flags.svg}" alt="${name}" width="30", height="20">&nbsp<b><BIG>${name}</BIG></b>
         </li>`).join(``)
-    // list.insertAdjacentHTML(`beforeend`, markup)
 }
 
 function createCountryMarkup(el) {
-    // const markup =
-        return el(({
+        return el.map(({
         name,
         capital,
         population,
@@ -58,12 +52,10 @@ function createCountryMarkup(el) {
         languages }) => 
         
         `<li>
-        <img src="${flags.svg}" alt="" width = 60/>
-        <h2>${name}</h2>
-        <h3>${capital}</h3>
-        <h3>${population}</h3>
-        <h3>${languages[0].name}</h3>
+        <img src="${flags.svg}" alt="${name}" width="30", height="20">&nbsp<b><BIG>${name}</BIG></b>
+        <p><b><span>Capital: </span></b>${capital}</p>
+        <p><b><span>Population: </span></b>${population}</p>
+        <p><b><span>Languages: </span></b>${languages[0].name}</p>
         </li>`).join(``)
-    // list.insertAdjacentHTML(`beforeend`, markup)
 }
 

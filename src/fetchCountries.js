@@ -1,13 +1,14 @@
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 export function fetchCountries(name) {
-    const BASE_URL = "https://restcountries.com/v2/name/all"
+    const BASE_URL = "https://restcountries.com/v2/name/"
     
-    return fetch(`${BASE_URL}?${name}=${name}.official&capital=capital&population=population&flags=flags.svg&languages=languages`)
+    return fetch(`${BASE_URL}${name}?fields=name,capital,population,flags,languages`)
         .then(resp =>
         {
             if (!resp.ok) {
+                Notify.failure('Oops, there is no country with that name');
                 throw new Error(resp.statusText)
             }
-            console.log(resp)
             return resp.json()
         }
         )
