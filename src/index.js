@@ -10,12 +10,16 @@ console.log(input)
 
 input.addEventListener(`input`, debounce(onInput, DEBOUNCE_DELAY))
 
-function onInput(evt) {
+function onInput() {
     const nameInput = input.value.trim();
-    list.textContent = "";
+    if (!nameInput) {
+        return
+    }
+    
     console.log(nameInput);
      
     fetchCountries(nameInput).then(data => {
+        list.textContent = "";
         if (data.length > 10) {
             return Notify.info('Too many matches found. Please enter a more specific name.');
         }
@@ -24,9 +28,6 @@ function onInput(evt) {
         }
         if (data.length > 0 || data.length <= 10) {
             return list.innerHTML = createMarkup(data);
-        }
-        if (nameInput = "") {
-            return
         }
     }) 
         .catch(error => console.log(error));

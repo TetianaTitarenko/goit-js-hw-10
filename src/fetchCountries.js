@@ -6,7 +6,7 @@ export function fetchCountries(name) {
         .then(resp =>
         {
             if (name !== "" && !resp.ok) {
-                
+                name = "" 
                 return Notify.failure('Oops, there is no country with that name');
         }
             if (!resp.ok) {
